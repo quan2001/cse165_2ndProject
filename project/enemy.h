@@ -15,8 +15,10 @@ public:
     Hitbox box;
     virtual ~Enemy() {}
     virtual void draw() = 0;
-    virtual void update() = 0;
-    virtual Hitbox getHitBox() const = 0;
+    //virtual void update() = 0;
+    virtual Hitbox getHitBox(){
+        return box;
+    }
 };
 
 class smallEnemy : public Enemy {
@@ -42,8 +44,9 @@ public:
             box = Hitbox(x,y,width,height);
     }
     ~smallEnemy(){
-        
+        std::cout << "small enemy destory" << std::endl;
     }
+    
     void draw(){
         glColor3f(1.0f, 0.0f, 0.0f); // red
 
@@ -91,7 +94,7 @@ public:
             wkey();
         }
     }
-    void update();
+    //void update();
     //HitBox getHitBox() const;
 private:
     
@@ -119,7 +122,9 @@ public:
             this->height = height;
             box = Hitbox(x,y,width,height);
     }
-    ~mediumEnemy();
+    ~mediumEnemy(){
+        std::cout << "destroy midEnemy" << std::endl;
+    }
     void draw(){
         glColor3f(0.0f, 0.0f, 1.0f); // blue
 
@@ -166,7 +171,7 @@ public:
             wkey();
         }
     }
-    void update();
+    //void update();
     //HitBox getHitBox() const;
 private:
     
@@ -182,7 +187,9 @@ public:
             box = Hitbox(x,y,width,height);
     }
     ~boss(){
-
+       
+        std::cout << "destroy midEnemy" << std::endl;
+    
     }
     void draw(){
         glColor3f(0.5f, 0.5f, 0.5f); // 
@@ -196,7 +203,7 @@ public:
         glEnd();
     }
     
-    void update();
+    //void update();
     //HitBox getHitBox() const;
 private:
     

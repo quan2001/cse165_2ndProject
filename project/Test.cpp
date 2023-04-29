@@ -10,8 +10,8 @@ using namespace std;
 
 // Define the keyboard callback function
 
-game Game();
-game.gameStart();
+game space;
+
 
 player shooter(0.01f,0.01f,0.04f);
 void keyboardCallback(unsigned char key, int x, int y) {
@@ -59,12 +59,22 @@ void keyboardCallback(unsigned char key, int x, int y) {
 void render(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    shooter.drawTriangle();
+
+   int i;
+   //cout << space.enemyList.size() << endl;
+   for(i=0;i<space.enemyList.size();i++){
+    space.enemyList[i]->draw();
+    //cout << i << endl;
+    
+    
+   }
    glutSwapBuffers();
    
 }
 
 
 int main(int argc, char** argv) {
+    space.gameStart();
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     // Initialize GLUT and create a window
     glutInit(&argc, argv);
