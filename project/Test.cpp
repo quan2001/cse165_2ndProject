@@ -64,12 +64,16 @@ void render(){
    //cout << space.enemyList.size() << endl;
    for(i=0;i<space.enemyList.size();i++){
     space.enemyList[i]->draw();
-    //cout << i << endl;
-    
+    //cout << i << endl
     
    }
+   
    glutSwapBuffers();
    
+}
+void idle() {
+    space.update();
+    glutPostRedisplay(); // Mark the window for redisplay
 }
 
 
@@ -82,8 +86,10 @@ int main(int argc, char** argv) {
     glutCreateWindow("OpenGL Window");
 
     glutDisplayFunc(render);
+    glutIdleFunc(idle);
     // Set the keyboard callback function
     glutKeyboardFunc(keyboardCallback);
+    
     
 
     // Enter the main loop

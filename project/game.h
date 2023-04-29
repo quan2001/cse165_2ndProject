@@ -38,7 +38,12 @@ class game{
         game(){
 
         }
-        
+        void update(){
+            int i = 0;
+            for(i=0;i<enemyList.size();i++){
+                enemyList[i]->update();
+            }
+        }
         
 };
 

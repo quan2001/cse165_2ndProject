@@ -1,6 +1,7 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include <cstdlib> 
 #include "hitbox.h"
 
 class Enemy {
@@ -15,7 +16,7 @@ public:
     Hitbox box;
     virtual ~Enemy() {}
     virtual void draw() = 0;
-    //virtual void update() = 0;
+    virtual void update() = 0;
     virtual Hitbox getHitBox(){
         return box;
     }
@@ -94,7 +95,10 @@ public:
             wkey();
         }
     }
-    //void update();
+    void update(){
+        int random_number = (rand() % 8)+1; //make random number 1-8
+        move(random_number);
+    }
     //HitBox getHitBox() const;
 private:
     
@@ -171,7 +175,10 @@ public:
             wkey();
         }
     }
-    //void update();
+    void update(){
+        int random_number = (rand() % 8)+1; //make random number 1-8
+        move(random_number);
+    }
     //HitBox getHitBox() const;
 private:
     
@@ -203,7 +210,9 @@ public:
         glEnd();
     }
     
-    //void update();
+    void update(){
+
+    }
     //HitBox getHitBox() const;
 private:
     
