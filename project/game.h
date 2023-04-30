@@ -8,6 +8,7 @@ class game{
     
     public:
         std::vector<Enemy*> enemyList;
+        int score;
 
         
         void addSmallEnemy(float x, float y){
@@ -36,14 +37,27 @@ class game{
             return enemyList;
         }
         game(){
-
+            score = 0;
         }
-        void update(){
+        void move(){
             int i = 0;
             for(i=0;i<enemyList.size();i++){
                 enemyList[i]->update();
             }
         }
+        
+        void checkIfDead(Enemy* enemyPtr ){
+            if(enemyPtr->getHp() == 0){
+                enemyList.erase(std::remove(enemyList.begin(), enemyList.end(), enemyPtr), enemyList.end());
+                delete enemyPtr;
+            }
+        }
+        bool gameEnd(){
+            if(enemyList.size() == 0){
+                return true;
+            }
+        }
+        
         
 };
 

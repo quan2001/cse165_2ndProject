@@ -2,12 +2,22 @@
 #define PLAYER_H
 
 #include "hitbox.h"
+#include "game.h"
+#include "enemy.h"
 
 class player{
     public:
+        bool w_pressed;
+        bool d_pressed;
+        bool s_pressed;
+        bool a_pressed;
+        
+        bool enter_pressed;
         float pointX;
         float pointY;
         float length;
+        const float speed = 0.0055f;
+        
         Hitbox box;
         
         player(float pointX,float pointY, float length){
@@ -15,9 +25,28 @@ class player{
             this->pointY = pointY;
             this->length= length;
             box = Hitbox(pointX,pointY,length,length);
+            w_pressed = false;
+            d_pressed = false;
+            s_pressed = false;
+            a_pressed = false;
+            enter_pressed = false;
+
             
             
         }
+        
+        void shoot(std::vector<Enemy*> list){
+            float width = pointX+(length/2.0f);
+            float horizontal = 20.0f;
+            int i;
+            for(i=0;i<list.size();i++){
+                if((list[i]->getHitBox()).intersectBox(pointX)){
+                    list[i]->reduceHp();
+                }
+            }
+
+        }
+
         ~player(){
             std::cout << "player destory" << std::endl;
         }
@@ -46,16 +75,16 @@ class player{
             std::cout << "X: " << pointX << "Y: " << pointY << std::endl;
         }
         void wkey(){
-            pointY = pointY + 0.01f;
+            pointY = pointY + speed;
         }
         void skey(){
-            pointY = pointY - 0.01f;
+            pointY = pointY - speed;
         }
         void akey(){
-            pointX = pointX - 0.01f;
+            pointX = pointX - speed;
         }
         void dkey(){
-            pointX = pointX + 0.01f;
+            pointX = pointX + speed;
         }
         void wdkey(){
             dkey();

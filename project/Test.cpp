@@ -22,43 +22,102 @@ void keyboardCallback(unsigned char key, int x, int y) {
             exit(0); // Exit the program
             
         }
+        if(key == 13){
+            shooter.enter_pressed = true;
+            //shooter.shoot(space.getList());
+            //cout << "shooting" << endl;
+        }
         if (key == 'f') {
             
             glutFullScreen();
-            glutPostRedisplay(); // maybe cause problems
+            //glutPostRedisplay(); // maybe cause problems
         }
         if (key == 'w') {
-            shooter.wkey();
+            shooter.w_pressed = true;
             shooter.print();
-            glutPostRedisplay();
+           // glutPostRedisplay();
         }
         if (key == 'a'){
-            shooter.akey();
+            shooter.a_pressed = true;
             shooter.print();
-            glutPostRedisplay();
+          //  glutPostRedisplay();
         }
         if (key == 's'){
-            shooter.skey();
+            shooter.s_pressed = true;
             shooter.print();
-            glutPostRedisplay();
+           // glutPostRedisplay();
         }
         if ( key == 'd'){
-            shooter.dkey();
+            shooter.d_pressed = true;
             shooter.print();
-            glutPostRedisplay();
+            //glutPostRedisplay();
         }
-        if ( key == 'd' && key == 'w'){
-            shooter.wdkey();
-            shooter.print();
-            glutPostRedisplay();
-        }
+        
             
 
     
 }
+void keyboardUpCallback(unsigned char key, int x, int y) {
+    // Handle the keyboard input
+
+        
+        if(key == 13){
+            shooter.enter_pressed = false;
+            //shooter.shoot(space.getList());
+            //cout << "shooting" << endl;
+        }
+        
+        if (key == 'w') {
+            shooter.w_pressed = false;
+            //shooter.print();
+           // glutPostRedisplay();
+        }
+        if (key == 'a'){
+            shooter.a_pressed = false;
+            //shooter.print();
+          //  glutPostRedisplay();
+        }
+        if (key == 's'){
+            shooter.s_pressed = false;
+            //shooter.print();
+           // glutPostRedisplay();
+        }
+        if ( key == 'd'){
+            shooter.d_pressed = false;
+            //shooter.print();
+            //glutPostRedisplay();
+        }      
+
+    
+}
+void updatePlayer() {
+   
+    if (shooter.w_pressed) { // move up
+        shooter.wkey();
+        shooter.print();
+    }
+    if (shooter.s_pressed) { // move down
+        shooter.skey();
+        shooter.print();
+    }
+    if (shooter.a_pressed) { // move left
+        shooter.akey();
+        shooter.print();
+    }
+    if (shooter.d_pressed) { // move right
+        shooter.dkey();
+        shooter.print();
+
+    }
+    if(shooter.enter_pressed){
+        shooter.shoot(space.getList());
+        cout << "shooting" << endl;
+    }
+}
 void render(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   shooter.drawTriangle();
+    updatePlayer();
+    shooter.drawTriangle();
 
    int i;
    //cout << space.enemyList.size() << endl;
@@ -72,7 +131,15 @@ void render(){
    
 }
 void idle() {
-    space.update();
+    int i;
+    
+    for(i = 0;i<(space.getList()).size();i++){
+        space.checkIfDead(space.getList()[i]);
+    }
+    space.move();
+    if(space.gameEnd()){
+        exit(0);
+    }
     glutPostRedisplay(); // Mark the window for redisplay
 }
 
@@ -86,9 +153,11 @@ int main(int argc, char** argv) {
     glutCreateWindow("OpenGL Window");
 
     glutDisplayFunc(render);
+    
     glutIdleFunc(idle);
     // Set the keyboard callback function
     glutKeyboardFunc(keyboardCallback);
+    glutKeyboardUpFunc(keyboardUpCallback);
     
     
 

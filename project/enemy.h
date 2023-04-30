@@ -13,28 +13,35 @@ public:
     float pointY;
     float width;
     float height;
+    int hp;
     Hitbox box;
     virtual ~Enemy() {}
     virtual void draw() = 0;
     virtual void update() = 0;
-    virtual Hitbox getHitBox(){
+    Hitbox getHitBox(){
         return box;
+    }
+    void reduceHp(){
+        hp = hp -1;
+    }
+    int getHp(){
+        return hp;
     }
 };
 
 class smallEnemy : public Enemy {
 private:
     void wkey(){
-        pointY = pointY + 0.01f;
+        pointY = pointY + 0.0055f;
     }
     void skey(){
-        pointY = pointY - 0.01f;
+        pointY = pointY - 0.0055f;
     }
     void akey(){
-        pointX = pointX - 0.01f;
+        pointX = pointX - 0.0055f;
      }
     void dkey(){
-        pointX = pointX + 0.01f;
+        pointX = pointX + 0.0055f;
     }
 public:
     smallEnemy(float x, float y,float width, float height){
@@ -42,6 +49,7 @@ public:
             this->pointY = y;
             this->width = width;
             this->height = height;
+            hp = 1;
             box = Hitbox(x,y,width,height);
     }
     ~smallEnemy(){
@@ -94,6 +102,7 @@ public:
             akey();
             wkey();
         }
+        box.updateHitBox(pointX,pointY,width,height);
     }
     void update(){
         int random_number = (rand() % 8)+1; //make random number 1-8
@@ -107,16 +116,16 @@ private:
 class mediumEnemy : public Enemy {
 private:
     void wkey(){
-        pointY = pointY + 0.01f;
+        pointY = pointY + 0.0001f;
     }
     void skey(){
-        pointY = pointY - 0.01f;
+        pointY = pointY - 0.0001f;
     }
     void akey(){
-        pointX = pointX - 0.01f;
+        pointX = pointX - 0.0001f;
      }
     void dkey(){
-        pointX = pointX + 0.01f;
+        pointX = pointX + 0.0001f;
     }
 public:
     mediumEnemy(float x, float y,float width, float height){
@@ -124,6 +133,7 @@ public:
             this->pointY = y;
             this->width = width;
             this->height = height;
+            hp = 3;
             box = Hitbox(x,y,width,height);
     }
     ~mediumEnemy(){
@@ -191,6 +201,7 @@ public:
             this->pointY = y;
             this->width = width;
             this->height = height;
+            hp = 10;
             box = Hitbox(x,y,width,height);
     }
     ~boss(){
